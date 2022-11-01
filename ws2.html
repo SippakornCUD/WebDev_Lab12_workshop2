@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+    async function start(){
+        let res = await fetch('https://data.go.th/dataset/296f32c6-8c7e-4a54-ade0-0913d35d3168/resource/d132638d-a243-4829-aed8-10ed4fad917f/download/priv_hos.json');
+        let raw = await res.text();
+        let obj = JSON.parse(raw);
+        let list = document.getElementById('list');
+        console.log(obj);
+        console.log(obj.features.length);
+        for(let i=0; i<obj.features.length; i++){
+            let tcontent = 'ชื่อโรงพยาบาล :'+obj.features[i].properties.name+'('+obj.features[i].properties.num_bed+' เตียง)';
+            if(obj.features[i].properties.num_bed <= 100){
+                let li = document.createElement("li");
+                li.innerHTML = tcontent;
+                list.appendChild(li);
+            }
+        }
+    }
+    window.onload = start;
+    </script>
+</head>
+<body>
+    <h2>โรงงพยาบาลเอกชน ในกทม.</h2>
+    <ol id="list"></ol>
+</body>
+</html>
